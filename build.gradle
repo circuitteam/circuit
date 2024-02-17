@@ -1,0 +1,44 @@
+plugins {
+    id 'java-library'
+    id 'eclipse'
+}
+
+group = 'dev.thatsnasu'
+version = '0.1.0'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+    withJavadocJar()
+    withSourcesJar()
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+	implementation 'dev.bitbite:OpenNetLib:2.0.0'
+	implementation 'io.github.classgraph:classgraph:4.8.165'
+	implementation 'dev.thatsnasu:Ansi:1.1.1'
+	
+    // Use JUnit Jupiter for testing.
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+}
+
+tasks.named('test') {
+    // Use JUnit Platform for unit tests.
+    useJUnitPlatform()
+}
